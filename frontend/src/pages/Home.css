@@ -1,0 +1,537 @@
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2020&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeIn 1s ease-out;
+}
+
+.hero-banner h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    animation: slideInDown 0.8s ease-out;
+}
+
+.hero-banner p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    animation: slideInUp 0.8s ease-out 0.2s both;
+}
+
+/* Product Grid Styles */
+.product-grid {
+    margin-top: 2rem;
+}
+
+/* Product Card Styles */
+.product-preview-container {
+    padding: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-preview {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    background: #f8f9fa;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.product-info {
+    padding: 1rem 0.5rem;
+    background: white;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.product-category {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+.product-price {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+    margin-top: auto;
+    letter-spacing: 0.02em;
+}
+
+.product-name {
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    height: 1.2em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-banner {
+        padding: 60px 0;
+    }
+
+    .hero-banner h1 {
+        font-size: 2em;
+    }
+
+    .product-preview-container {
+        padding: 0.5rem;
+    }
+
+    .product-info {
+        padding: 0.75rem 0.4rem;
+    }
+
+    .product-category {
+        font-size: 0.8rem;
+    }
+
+    .product-price {
+        font-size: 0.7rem;
+    }
+
+    .product-name {
+        font-size: 0.45rem;
+    }
+}
+
+/* Add these styles for the filter and sort section */
+.filter-sort-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: -0.5rem -0.5rem 1rem -0.5rem;
+}
+
+.filter-header span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-left: 0.5rem;
+}
+
+.clear-filters {
+    margin-left: auto;
+    color: #dc3545;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.clear-filters:hover {
+    color: #bd2130;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.filter-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.filter-select,
+.sort-select {
+    height: 38px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background-color: white;
+    transition: all 0.2s ease;
+}
+
+.filter-select:focus,
+.sort-select:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.15);
+    outline: none;
+}
+
+.price-range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.price-range-inputs input {
+    width: 100%;
+    height: 38px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.price-range-inputs span {
+    color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    .filter-sort-section {
+        padding: 1rem;
+    }
+    
+    .filter-group {
+        margin-bottom: 1rem;
+    }
+    
+    .price-range-inputs {
+        flex-direction: row;
+    }
+}
+
+/* Best Sellers Section */
+.best-sellers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0 1.5rem 0;
+    padding: 0 0.5rem;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-title h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.section-icon {
+    color: #e74c3c;
+    font-size: 1.5rem;
+}
+
+.view-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.view-all-btn:hover {
+    color: #2980b9;
+}
+
+.best-sellers-row {
+    margin-bottom: 2rem;
+}
+
+.section-divider {
+    height: 1px;
+    background: #eee;
+    margin: 2rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .best-sellers-header {
+        margin: 1.5rem 0 1rem 0;
+    }
+
+    .section-title h2 {
+        font-size: 1.2rem;
+    }
+
+    .section-icon {
+        font-size: 1.2rem;
+    }
+
+    .view-all-btn {
+        font-size: 0.8rem;
+    }
+}
+
+/* Add these section styles */
+.featured-section {
+    background-color: #ffffff;
+    padding: 3rem 0;
+}
+
+.best-sellers-section {
+    background-color: #f8f9fa;
+    padding: 3rem 0;
+    margin-top: 2rem;
+}
+
+.filter-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: -2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.filter-section .form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.filter-section .form-select {
+    border-color: #e0e0e0;
+}
+
+.filter-section .btn {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .filter-section {
+        margin-top: -1rem;
+        padding: 1rem;
+    }
+    
+    .filter-section .col-md-3 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* New Arrivals Section - Grid Style */
+.new-arrivals-section {
+    background-color: #ffffff;
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+.new-arrivals-grid {
+    margin-top: 1.5rem;
+}
+
+.new-arrival-card {
+    display: block;
+    text-decoration: none;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    height: 100%;
+    max-height: 350px;
+}
+
+.new-arrival-card:hover {
+    transform: translateY(-5px);
+}
+
+.new-arrival-image {
+    position: relative;
+    padding-top: 50%;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+.new-arrival-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.75rem;
+}
+
+.new-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e74c3c;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.new-arrival-info {
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.new-arrival-info h3 {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin: 0;
+    font-weight: 600;
+}
+
+.new-arrival-info .category {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.new-arrival-info .price {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    font-weight: 700;
+    margin: 0;
+    padding-top: 0.3rem;
+}
+
+.new-arrival-item.featured .new-arrival-card {
+    background: #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .new-arrivals-section {
+        padding: 1.5rem 0;
+    }
+
+    .new-arrival-info h3 {
+        font-size: 0.9rem;
+    }
+
+    .new-arrival-info .category {
+        font-size: 0.8rem;
+    }
+
+    .new-arrival-info .price {
+        font-size: 1rem;
+    }
+}
+
+/* Update the new arrivals section styles */
+.new-arrivals {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+}
+
+.new-arrivals h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Add margin bottom to the product cards in new arrivals */
+.new-arrivals .col-md-3 {
+    margin-bottom: 2rem; /* Adds space between rows of products */
+}
+
+/* If you're using ProductPreview component, you can also add margin to the container */
+.new-arrivals .product-preview-container {
+    margin-bottom: 2rem;
+}
+
+/* Make sure the last row doesn't have extra margin */
+.new-arrivals .row:last-child .col-md-3:last-child {
+    margin-bottom: 0;
+}
+
+.featured-title {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: #333;
+}
+
+/* Adjust container padding */
+.container {
+    padding: 0.5rem;
+}
+
+/* Make grid gaps smaller */
+.g-2 {
+    --bs-gutter-x: 0.5rem;
+    --bs-gutter-y: 0.5rem;
+}
+
+/* Optional: Add responsive adjustments */
+@media (max-width: 576px) {
+    .featured-title {
+        font-size: 1.2rem;
+        margin: 0.8rem 0;
+    }
+    
+    .container {
+        padding: 0.3rem;
+    }
+}

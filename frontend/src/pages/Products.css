@@ -1,0 +1,34 @@
+.products-page {
+    padding: 2rem 0;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+}
+
+.loading, .error, .no-products {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.error {
+    color: #dc3545;
+}
+
+.no-products {
+    color: #666;
+}
+
+.products-grid {
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        margin-top: 1rem;
+    }
+} 

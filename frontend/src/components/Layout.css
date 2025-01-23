@@ -1,0 +1,16 @@
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    padding-top: 56px; /* Height of fixed navbar */
+}
+
+@media (max-width: 991px) {
+    .main-content {
+        padding-top: 64px;
+    }
+} 

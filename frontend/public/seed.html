@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seed Database</title>
+</head>
+<body>
+    <button onclick="seedDatabase()">Seed Database</button>
+    <script>
+        function seedDatabase() {
+            fetch('http://localhost:8080/api/products/seed-data', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Database seeded successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error seeding database');
+            });
+        }
+    </script>
+</body>
+</html> 

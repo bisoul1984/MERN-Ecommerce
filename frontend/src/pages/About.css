@@ -1,0 +1,858 @@
+.about-page {
+    background-color: #f8f9fa;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 6rem 0;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    animation: slideInLeft 1s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: slideInRight 1s ease-out 0.3s both;
+}
+
+.mission-section {
+    padding: 4rem 0;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 4rem;
+}
+
+.mission-content {
+    padding: 2rem;
+}
+
+.mission-content h2 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.mission-content p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+.tech-icons {
+    font-size: 2rem;
+    color: #3498db;
+    display: flex;
+    gap: 1.5rem;
+    animation: bounceIn 1s ease-out 0.5s both;
+}
+
+.mission-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    animation: slideInRight 1s ease-out 0.3s both;
+}
+
+.mission-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.features-section {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.features-section h2 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+    position: relative;
+    animation: slideInLeft 0.8s ease-out;
+    overflow: hidden;
+}
+
+.features-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transform: translateX(-50%);
+    animation: expandWidth 0.8s ease-out 0.8s forwards;
+}
+
+@keyframes expandWidth {
+    from { width: 0; }
+    to { width: 100px; }
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    height: 100%;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out both;
+    transform-origin: center;
+    backface-visibility: hidden;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #3498db;
+    margin-bottom: 1.5rem;
+    animation: rotateIn 0.8s ease-out both;
+}
+
+.feature-card h3 {
+    color: #2c3e50;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.stats-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    border-radius: 20px;
+    margin: 4rem 0;
+}
+
+.stat-card {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    animation: bounceIn 0.8s ease-out both;
+}
+
+.stat-card h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 4rem 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .mission-section {
+        padding: 2rem 0;
+    }
+
+    .mission-image img {
+        height: 300px;
+        margin-top: 2rem;
+    }
+
+    .feature-card {
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.feature-card, .stat-card, .mission-image img {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(10deg);
+    color: #2980b9;
+}
+
+.feature-card:hover h3 {
+    color: #3498db;
+    transform: translateY(-2px);
+}
+
+.feature-card:hover p {
+    color: #34495e;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.feature-icon {
+    animation: scaleIn 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.feature-card {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Timeline Section */
+.timeline-section {
+    padding: 4rem 0;
+    position: relative;
+}
+
+.timeline-section h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 3rem;
+    position: relative;
+    animation: slideInLeft 0.8s ease-out;
+    overflow: hidden;
+}
+
+.timeline-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transform: translateX(-50%);
+    animation: expandWidth 0.8s ease-out 0.8s forwards;
+}
+
+.timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: #3498db;
+    transform: translateX(-50%);
+    animation: growHeight 1.5s ease-out;
+}
+
+.timeline-item {
+    margin-bottom: 2rem;
+    position: relative;
+    width: 50%;
+    padding: 0 2rem;
+}
+
+.timeline-item:nth-child(even) {
+    margin-left: 50%;
+}
+
+.timeline-content {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    animation: fadeIn 0.8s ease-out both;
+    transform-origin: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.timeline-content h3 {
+    color: #3498db;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content h4 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+/* Team Section */
+.team-section {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.team-section h2 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+    position: relative;
+    animation: slideInLeft 0.8s ease-out;
+    overflow: hidden;
+}
+
+.team-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transform: translateX(-50%);
+    animation: expandWidth 0.8s ease-out 0.8s forwards;
+}
+
+.team-card {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out both;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(41, 128, 185, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+    border-radius: 15px;
+}
+
+.team-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+.team-card:hover::before {
+    opacity: 1;
+}
+
+.team-icon {
+    font-size: 3.5rem;
+    color: #3498db;
+    margin-bottom: 1.5rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
+}
+
+.team-card:hover .team-icon {
+    transform: scale(1.1) rotate(5deg);
+    color: #2980b9;
+}
+
+.team-card h3 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.team-card:hover h3 {
+    transform: translateY(-3px);
+    color: #2980b9;
+}
+
+.team-role {
+    color: #3498db;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.team-card:hover .team-role {
+    transform: translateY(-2px);
+}
+
+.team-description {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.team-card:hover .team-description {
+    color: #34495e;
+}
+
+/* Awards Section */
+.awards-section {
+    padding: 4rem 0;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 20px;
+    margin: 4rem 0;
+}
+
+.awards-section h2 {
+    position: relative;
+    animation: slideInLeft 0.8s ease-out;
+    overflow: hidden;
+}
+
+.awards-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transform: translateX(-50%);
+    animation: expandWidth 0.8s ease-out 0.8s forwards;
+}
+
+.award-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.award-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.award-card:hover {
+    animation: none;
+}
+
+.award-card::before,
+.award-card::after {
+    display: none;
+}
+
+.award-icon {
+    font-size: 2.5rem;
+    color: #f1c40f;
+    margin-bottom: 1rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.award-card:hover .award-icon {
+    transform: scale(1.2) rotateY(180deg);
+}
+
+.award-card h3 {
+    position: relative;
+    transition: all 0.4s ease;
+    padding-bottom: 10px;
+}
+
+.award-card:hover h3 {
+    transform: scale(1.05);
+}
+
+.award-card p {
+    transition: all 0.4s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.award-card:hover p {
+    transform: scale(1.1);
+}
+
+/* Call to Action Section */
+.cta-section {
+    padding: 6rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    border-radius: 20px;
+    margin: 4rem 0;
+    color: white;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-button {
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    background: white;
+    color: #2c3e50;
+    border: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    background: #f8f9fa;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    100% {
+        left: 100%;
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 0;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 2rem;
+        margin-left: 0 !important;
+    }
+
+    .team-card, .award-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-section {
+        padding: 3rem 1rem;
+    }
+}
+
+/* Add these new animation keyframes */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateIn {
+    from {
+        transform: rotate(-180deg) scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% { transform: scale(0.9); }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 5px rgba(52, 152, 219, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(52, 152, 219, 0.4); }
+    100% { box-shadow: 0 0 5px rgba(52, 152, 219, 0.2); }
+}
+
+/* Apply animations to elements */
+.hero-section .hero-subtitle {
+    animation: slideInRight 1s ease-out 0.3s both;
+}
+
+.mission-content p {
+    animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+.tech-icons {
+    animation: bounceIn 1s ease-out 0.5s both;
+}
+
+.mission-image {
+    animation: slideInRight 1s ease-out 0.3s both;
+}
+
+.feature-card {
+    animation: fadeIn 0.5s ease-out both;
+}
+
+.feature-icon {
+    animation: rotateIn 0.8s ease-out both;
+}
+
+.team-card {
+    animation: fadeIn 0.8s ease-out both;
+}
+
+.team-card:hover {
+    animation: glowPulse 2s infinite;
+}
+
+.timeline-content {
+    animation: fadeIn 0.8s ease-out both;
+}
+
+.stat-card {
+    animation: bounceIn 0.8s ease-out both;
+}
+
+.award-card {
+    animation: slideInRight 0.8s ease-out both;
+}
+
+/* Enhanced hover effects */
+.feature-card:hover .feature-icon {
+    animation: rotateIn 0.8s ease-out;
+}
+
+.team-card:hover .team-icon {
+    animation: bounceIn 0.8s ease-out;
+}
+
+/* Section headers animation */
+.features-section h2::after,
+.team-section h2::after,
+.timeline-section h2::after,
+.awards-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #3498db;
+    transform: translateX(-50%);
+    animation: expandWidth 0.8s ease-out 0.8s forwards;
+}
+
+/* Timeline animations */
+@keyframes growHeight {
+    from { height: 0; }
+    to { height: 100%; }
+}
+
+/* Stagger children animations */
+.features-section .row > div:nth-child(1) .feature-card { animation-delay: 0.1s; }
+.features-section .row > div:nth-child(2) .feature-card { animation-delay: 0.2s; }
+.features-section .row > div:nth-child(3) .feature-card { animation-delay: 0.3s; }
+.features-section .row > div:nth-child(4) .feature-card { animation-delay: 0.4s; }
+
+.team-section .row > div:nth-child(1) .team-card { animation-delay: 0.1s; }
+.team-section .row > div:nth-child(2) .team-card { animation-delay: 0.2s; }
+.team-section .row > div:nth-child(3) .team-card { animation-delay: 0.3s; }
+
+.stats-section .row > div:nth-child(1) .stat-card { animation-delay: 0.1s; }
+.stats-section .row > div:nth-child(2) .stat-card { animation-delay: 0.2s; }
+.stats-section .row > div:nth-child(3) .stat-card { animation-delay: 0.3s; }
+.stats-section .row > div:nth-child(4) .stat-card { animation-delay: 0.4s; }
+
+/* Add these new hover effects for "Our Journey" section */
+.timeline-content:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(52, 152, 219, 0.25);
+}
+
+.timeline-content:hover h3 {
+    color: #2980b9;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover h4 {
+    color: #3498db;
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #3498db;
+    border-radius: 50%;
+    top: 50%;
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover::after {
+    transform: scale(1.3);
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+}
+
+.timeline-item:nth-child(odd)::after {
+    right: -10px;
+}
+
+.timeline-item:nth-child(even)::after {
+    left: -10px;
+}
+
+/* Add staggered animation for multiple awards */
+.awards-section .row > div:nth-child(1) .award-card { animation-delay: 0.1s; }
+.awards-section .row > div:nth-child(2) .award-card { animation-delay: 0.2s; }
+.awards-section .row > div:nth-child(3) .award-card { animation-delay: 0.3s; }
+
+/* Remove or modify these background-related hover effects */
+.team-card::before,
+.award-card::before,
+.timeline-content::before {
+    display: none; /* This removes the gradient overlay on hover */
+} 

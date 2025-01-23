@@ -1,0 +1,133 @@
+.categories-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.category-hero {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.category-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.category-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.category-grid {
+    margin-top: -2rem;
+}
+
+.category-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.category-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    --category-color: #2c3e50;
+    border: 1px solid #eee;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    border-color: #2c3e50;
+}
+
+.category-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: #2c3e50;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.category-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 66.67%; /* 3:2 Aspect Ratio */
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+.category-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-image {
+    transform: scale(1.05);
+}
+
+.category-content {
+    padding: 1.5rem;
+    background: white;
+}
+
+.category-content h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.category-content p {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.view-more {
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .view-more {
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .category-hero {
+        padding: 3rem 0;
+    }
+
+    .category-hero h1 {
+        font-size: 2rem;
+    }
+
+    .category-grid {
+        margin-top: -1rem;
+    }
+
+    .category-card {
+        margin-bottom: 2rem;
+    }
+} 
