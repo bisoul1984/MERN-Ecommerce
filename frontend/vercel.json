@@ -1,32 +1,73 @@
 {
+
   "version": 2,
+
+  "buildCommand": "DISABLE_ESLINT_PLUGIN=true CI=false GENERATE_SOURCEMAP=false npm run build",
+
+  "installCommand": "npm install --legacy-peer-deps",
+
   "builds": [
+
     {
+
       "src": "package.json",
+
       "use": "@vercel/static-build",
-      "config": { "distDir": "build" }
+
+      "config": { 
+
+        "distDir": "build",
+
+        "buildCommand": "DISABLE_ESLINT_PLUGIN=true CI=false GENERATE_SOURCEMAP=false npm run build"
+
+      }
+
     }
+
   ],
+
   "routes": [
+
     {
+
       "src": "/static/(.*)",
+
       "dest": "/static/$1"
+
     },
+
     {
+
       "src": "/favicon.ico",
+
       "dest": "/favicon.ico"
+
     },
+
     {
+
       "src": "/manifest.json",
+
       "dest": "/manifest.json"
+
     },
+
     {
+
       "src": "/robots.txt",
+
       "dest": "/robots.txt"
+
     },
+
     {
+
       "src": "/(.*)",
+
       "dest": "/index.html"
+
     }
+
   ]
-}
+
+} 
