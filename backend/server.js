@@ -46,9 +46,9 @@ app.use(cors({
 
         'http://localhost:3000',
 
-        'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app',
+        'https://mern-ecommerce-7nfx-seven.vercel.app',  // Add your new frontend URL
 
-        'https://your-frontend-domain.vercel.app'  // Add your frontend Vercel URL here
+        'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app'
 
     ],
 
