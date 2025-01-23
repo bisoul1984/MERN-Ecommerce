@@ -44,7 +44,7 @@ app.use(cors({
 
         'http://localhost:3000',
 
-        'https://e-shop-frontend.vercel.app'
+        'https://your-frontend-domain.vercel.app'  // Add your frontend Vercel domain here
 
     ],
 
