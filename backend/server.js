@@ -1,6 +1,10 @@
-const app = require('./app');
+const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config();
+
+// Initialize express
+const app = express();
 
 // Basic error logging
 const logError = (err) => {
@@ -11,8 +15,9 @@ const logError = (err) => {
     });
 };
 
-// Enable CORS
+// Middleware
 app.use(cors());
+app.use(express.json());
 
 // Add request logging
 app.use((req, res, next) => {
@@ -21,22 +26,26 @@ app.use((req, res, next) => {
 });
 
 // Root route
-app.get('/', (req, res) => {
-    res.json({ 
-        message: 'Backend server is running',
-        env: process.env.NODE_ENV,
-        timestamp: new Date().toISOString()
-    });
+app.get('/', async (req, res) => {
+    try {
+        res.json({ 
+            message: 'Backend server is running',
+            env: process.env.NODE_ENV,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        logError(error);
+        res.status(500).json({ error: 'Server error', message: error.message });
+    }
 });
 
 // Health check route
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
     try {
         res.status(200).json({ 
             status: 'healthy', 
             environment: process.env.NODE_ENV,
-            timestamp: new Date().toISOString(),
-            mongodb: process.env.MONGODB_URI ? 'configured' : 'not configured'
+            timestamp: new Date().toISOString()
         });
     } catch (error) {
         logError(error);
@@ -47,42 +56,35 @@ app.get('/api/health', (req, res) => {
 // MongoDB connection test route
 app.get('/api/db-test', async (req, res) => {
     try {
-        // Check if MongoDB URI is configured
+        // Check MongoDB URI
         if (!process.env.MONGODB_URI) {
-            return res.status(500).json({
-                status: 'error',
-                message: 'MongoDB URI is not configured',
-                timestamp: new Date().toISOString()
-            });
+            throw new Error('MongoDB URI is not configured');
         }
 
-        // Try to connect to MongoDB if not already connected
-        if (mongoose.connection.readyState !== 1) {
-            await mongoose.connect(process.env.MONGODB_URI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                serverSelectionTimeoutMS: 5000,
-                retryWrites: true,
-                w: 'majority'
-            });
-        }
+        // Connect to MongoDB
+        await mongoose.connect(process.env.MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
 
         res.json({
             status: 'success',
             timestamp: new Date().toISOString(),
-            connected: mongoose.connection.readyState === 1,
-            dbState: mongoose.connection.readyState,
-            dbName: mongoose.connection.name,
-            host: mongoose.connection.host
+            connected: true,
+            database: mongoose.connection.name
         });
     } catch (error) {
-        console.error('MongoDB connection error:', error);
+        logError(error);
         res.status(500).json({
             status: 'error',
             timestamp: new Date().toISOString(),
-            message: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            message: error.message
         });
+    } finally {
+        // Close connection for serverless environment
+        if (mongoose.connection.readyState === 1) {
+            await mongoose.connection.close();
+        }
     }
 });
 
@@ -98,7 +100,6 @@ app.use((err, req, res, next) => {
 
 // Handle 404
 app.use((req, res) => {
-    console.log(`404 - Route not found: ${req.method} ${req.path}`);
     res.status(404).json({ 
         error: 'Route not found',
         path: `${req.method} ${req.path}`,
@@ -106,12 +107,5 @@ app.use((req, res) => {
     });
 });
 
-// Only start server in development
-if (process.env.NODE_ENV !== 'production') {
-    const port = process.env.PORT || 3001;
-    app.listen(port, () => {
-        console.log(`Server running on port ${port}`);
-    });
-}
-
+// Export the express app
 module.exports = app;
