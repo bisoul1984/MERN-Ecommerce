@@ -1,9 +1,12 @@
-const app = require('./app');
 const express = require('express');
 
 const cors = require('cors');
 
 const mongoose = require('mongoose');
+
+const userRoutes = require('./routes/userRoutes');
+
+const productRoutes = require('./routes/productRoutes');
 
 require('dotenv').config();
 
@@ -35,7 +38,21 @@ const logError = (err) => {
 
 // Middleware
 
-app.use(cors());
+app.use(cors({
+
+    origin: [
+
+        'http://localhost:3000',
+
+        'https://e-shop-frontend.vercel.app'
+
+    ],
+
+    credentials: true,
+
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+
+}));
 
 app.use(express.json());
 
@@ -53,41 +70,11 @@ app.use((req, res, next) => {
 
 
 
-// Test route to verify server is running
+// API Routes
 
-app.get('/api/test', (req, res) => {
+app.use('/api/users', userRoutes);
 
-    res.json({ message: 'Server is running' });
-
-});
-
-
-
-// Health check route
-
-app.get('/api/health', async (req, res) => {
-
-    try {
-
-        res.status(200).json({ 
-
-            status: 'healthy', 
-
-            environment: process.env.NODE_ENV,
-
-            timestamp: new Date().toISOString()
-
-        });
-
-    } catch (error) {
-
-        logError(error);
-
-        res.status(500).json({ error: 'Health check failed' });
-
-    }
-
-});
+app.use('/api/products', productRoutes);
 
 
 
@@ -119,9 +106,41 @@ app.get('/', async (req, res) => {
 
 
 
+// Health check route
+
+app.get('/api/health', async (req, res) => {
+
+    try {
+
+        res.status(200).json({ 
+
+            status: 'healthy', 
+
+            environment: process.env.NODE_ENV,
+
+            timestamp: new Date().toISOString(),
+
+            mongodb: process.env.MONGODB_URI ? 'configured' : 'not configured'
+
+        });
+
+    } catch (error) {
+
+        logError(error);
+
+        res.status(500).json({ error: 'Health check failed' });
+
+    }
+
+});
+
+
+
 // MongoDB connection test route
 
 app.get('/api/db-test', async (req, res) => {
+
+    let connection;
 
     try {
 
@@ -137,11 +156,13 @@ app.get('/api/db-test', async (req, res) => {
 
         // Connect to MongoDB
 
-        await mongoose.connect(process.env.MONGODB_URI, {
+        connection = await mongoose.connect(process.env.MONGODB_URI, {
 
             useNewUrlParser: true,
 
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+
+            serverSelectionTimeoutMS: 5000
 
         });
 
@@ -155,7 +176,9 @@ app.get('/api/db-test', async (req, res) => {
 
             connected: true,
 
-            database: mongoose.connection.name
+            database: connection.connection.name,
+
+            host: connection.connection.host
 
         });
 
@@ -169,7 +192,9 @@ app.get('/api/db-test', async (req, res) => {
 
             timestamp: new Date().toISOString(),
 
-            message: error.message
+            message: error.message,
+
+            details: process.env.NODE_ENV === 'development' ? error.stack : undefined
 
         });
 
@@ -177,9 +202,17 @@ app.get('/api/db-test', async (req, res) => {
 
         // Close connection for serverless environment
 
-        if (mongoose.connection.readyState === 1) {
+        if (connection) {
 
-            await mongoose.connection.close();
+            try {
+
+                await connection.disconnect();
+
+            } catch (error) {
+
+                console.error('Error disconnecting from MongoDB:', error);
+
+            }
 
         }
 
