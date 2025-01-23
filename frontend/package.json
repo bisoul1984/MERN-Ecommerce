@@ -74,7 +74,7 @@
 
     "start": "react-scripts start",
 
-    "build": "CI=false react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true CI=false GENERATE_SOURCEMAP=false react-scripts build",
 
     "test": "react-scripts test",
 
@@ -127,3 +127,5 @@
   }
 
 }
+
+
