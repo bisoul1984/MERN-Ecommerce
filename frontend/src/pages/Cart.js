@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Table, Button } from 'react-bootstrap';
-import React from 'react';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import './Cart.css';
 
-import axios from 'axios';
+import api from '../services/api';  // Replace axios with api service
 
 
 
@@ -58,9 +56,9 @@ function Cart() {
 
 
 
-            const response = await axios.delete(
+            const response = await api.delete(
 
-                'http://localhost:8081/api/users/remove-from-cart',
+                '/users/remove-from-cart',
 
                 {
 
