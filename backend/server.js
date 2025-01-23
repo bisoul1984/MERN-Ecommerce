@@ -46,15 +46,13 @@ app.use(cors({
 
         'http://localhost:3000',
 
-        'https://mern-ecommerce-7nfx-seven.vercel.app',
-
-        'https://mern-ecommerce-backend-seven.vercel.app'
+        'https://mern-ecommerce-7nfx-seven.vercel.app'
 
     ],
 
     credentials: true,
 
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
 
 }));
 
@@ -115,16 +113,6 @@ app.get('/', (req, res) => {
     res.json({
 
         message: 'Backend API is running',
-
-        endpoints: {
-
-            products: '/api/products',
-
-            users: '/api/users',
-
-            health: '/api/health'
-
-        },
 
         timestamp: new Date().toISOString()
 
@@ -240,11 +228,13 @@ app.use((err, req, res, next) => {
 
 app.use((req, res) => {
 
+    console.log('404 - Route not found:', req.path);
+
     res.status(404).json({ 
 
         error: 'Route not found',
 
-        path: `${req.method} ${req.path}`,
+        path: req.path,
 
         timestamp: new Date().toISOString()
 
