@@ -46,9 +46,9 @@ app.use(cors({
 
         'http://localhost:3000',
 
-        'https://mern-ecommerce-7nfx-seven.vercel.app',  // Add your new frontend URL
+        'https://mern-ecommerce-7nfx-seven.vercel.app',
 
-        'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app'
+        'https://mern-ecommerce-backend-seven.vercel.app'
 
     ],
 
@@ -118,29 +118,17 @@ app.get('/', async (req, res) => {
 
 // Health check route
 
-app.get('/api/health', async (req, res) => {
+app.get('/api/health', (req, res) => {
 
-    try {
+    res.json({
 
-        res.status(200).json({ 
+        status: 'healthy',
 
-            status: 'healthy', 
+        timestamp: new Date().toISOString(),
 
-            environment: process.env.NODE_ENV,
+        env: process.env.NODE_ENV
 
-            timestamp: new Date().toISOString(),
-
-            mongodb: process.env.MONGODB_URI ? 'configured' : 'not configured'
-
-        });
-
-    } catch (error) {
-
-        logError(error);
-
-        res.status(500).json({ error: 'Health check failed' });
-
-    }
+    });
 
 });
 
