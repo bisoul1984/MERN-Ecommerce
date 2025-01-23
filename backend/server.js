@@ -10,6 +10,8 @@ const productRoutes = require('./routes/productRoutes');
 
 require('dotenv').config();
 
+const path = require('path');
+
 
 
 // Initialize express
@@ -46,7 +48,7 @@ app.use(cors({
 
         'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app',
 
-        'https://your-frontend-domain.vercel.app'  // You'll add this after frontend deployment
+        'https://your-frontend-domain.vercel.app'  // Add your frontend Vercel URL here
 
     ],
 
@@ -77,6 +79,12 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoutes);
 
 app.use('/api/products', productRoutes);
+
+
+
+// Add this after your middleware setup
+
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 
 
