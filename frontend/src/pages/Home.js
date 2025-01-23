@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import React from 'react';
+/* eslint-disable no-unused-vars */
 
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+
+import { Container, Row, Col, Form } from 'react-bootstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -33,6 +33,10 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 
 import { FaFire, FaArrowRight, FaStar } from 'react-icons/fa';
+
+import { Button } from 'react-bootstrap';
+
+import LaptopIcon from '@mui/icons-material/Laptop';
 
 
 
@@ -660,4 +664,4 @@ function Home() {
 
 
 
-export default Home;
+export default Home; 
