@@ -74,6 +74,26 @@ app.use((req, res, next) => {
 
 
 
+// MongoDB Connection
+
+mongoose.connect(process.env.MONGODB_URI, {
+
+    useNewUrlParser: true,
+
+    useUnifiedTopology: true
+
+}).then(() => {
+
+    console.log('Connected to MongoDB');
+
+}).catch((err) => {
+
+    console.error('MongoDB connection error:', err);
+
+});
+
+
+
 // API Routes
 
 app.use('/api/products', productRoutes);
@@ -82,35 +102,33 @@ app.use('/api/users', userRoutes);
 
 
 
-// Add this after your middleware setup
+// Serve static files
 
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 
 
-// Root route
+// Root route for testing
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
 
-    try {
+    res.json({
 
-        res.json({ 
+        message: 'Backend API is running',
 
-            message: 'Backend server is running',
+        endpoints: {
 
-            env: process.env.NODE_ENV,
+            products: '/api/products',
 
-            timestamp: new Date().toISOString()
+            users: '/api/users',
 
-        });
+            health: '/api/health'
 
-    } catch (error) {
+        },
 
-        logError(error);
+        timestamp: new Date().toISOString()
 
-        res.status(500).json({ error: 'Server error', message: error.message });
-
-    }
+    });
 
 });
 
@@ -138,11 +156,7 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/db-test', async (req, res) => {
 
-    let connection;
-
     try {
-
-        // Check MongoDB URI
 
         if (!process.env.MONGODB_URI) {
 
@@ -152,17 +166,19 @@ app.get('/api/db-test', async (req, res) => {
 
 
 
-        // Connect to MongoDB
+        const status = mongoose.connection.readyState;
 
-        connection = await mongoose.connect(process.env.MONGODB_URI, {
+        const statusMap = {
 
-            useNewUrlParser: true,
+            0: 'disconnected',
 
-            useUnifiedTopology: true,
+            1: 'connected',
 
-            serverSelectionTimeoutMS: 5000
+            2: 'connecting',
 
-        });
+            3: 'disconnecting'
+
+        };
 
 
 
@@ -172,11 +188,11 @@ app.get('/api/db-test', async (req, res) => {
 
             timestamp: new Date().toISOString(),
 
-            connected: true,
+            connection: statusMap[status],
 
-            database: connection.connection.name,
+            database: mongoose.connection.name,
 
-            host: connection.connection.host
+            host: mongoose.connection.host
 
         });
 
@@ -190,29 +206,9 @@ app.get('/api/db-test', async (req, res) => {
 
             timestamp: new Date().toISOString(),
 
-            message: error.message,
-
-            details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            message: error.message
 
         });
-
-    } finally {
-
-        // Close connection for serverless environment
-
-        if (connection) {
-
-            try {
-
-                await connection.disconnect();
-
-            } catch (error) {
-
-                console.error('Error disconnecting from MongoDB:', error);
-
-            }
-
-        }
 
     }
 
@@ -257,7 +253,5 @@ app.use((req, res) => {
 });
 
 
-
-// Export the express app
 
 module.exports = app;
