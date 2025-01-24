@@ -300,6 +300,80 @@ app.get('/api/db-test', async (req, res) => {
 
 
 
+// Add this right after your routes are registered
+
+app.use((req, res, next) => {
+
+    console.log('Route debugging:', {
+
+        path: req.path,
+
+        method: req.method,
+
+        registeredRoutes: app._router.stack
+
+            .filter(r => r.route)
+
+            .map(r => ({
+
+                path: r.route.path,
+
+                methods: Object.keys(r.route.methods)
+
+            }))
+
+    });
+
+    next();
+
+});
+
+
+
+// Move your API routes to the top, right after middleware
+
+app.use(express.json());
+
+app.use(cors({...}));
+
+
+
+// API Routes - Must be before error handlers
+
+app.use('/api/products', productRoutes);
+
+app.use('/api/users', userRoutes);
+
+
+
+// Test route to verify routing
+
+app.get('/api/route-test', (req, res) => {
+
+    res.json({
+
+        message: 'Route handler working',
+
+        registeredRoutes: app._router.stack
+
+            .filter(r => r.route)
+
+            .map(r => ({
+
+                path: r.route.path,
+
+                methods: Object.keys(r.route.methods)
+
+            })),
+
+        timestamp: new Date().toISOString()
+
+    });
+
+});
+
+
+
 // Error handling middleware - IMPORTANT: Keep this after routes
 
 app.use((err, req, res, next) => {
