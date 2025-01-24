@@ -48,7 +48,9 @@ app.use(cors({
 
         'https://mern-ecommerce-7nfx.vercel.app',
 
-        'https://mern-ecommerce-7nfx-cdq0uo3rs-bisrats-projects-b32b673c.vercel.app'
+        'https://mern-ecommerce-7nfx-cdq0uo3rs-bisrats-projects-b32b673c.vercel.app',
+
+        'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app'
 
     ],
 
