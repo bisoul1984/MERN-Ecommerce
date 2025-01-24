@@ -1,3 +1,43 @@
+const express = require('express');
+const router = express.Router();  // Add this line at the top
+const Product = require('../models/Product');
+const mongoose = require('mongoose');
+
+// Debug middleware for this router
+router.use((req, res, next) => {
+    console.log('Product Route:', {
+        path: req.path,
+        method: req.method,
+        mongoState: mongoose.connection.readyState
+    });
+    next();
+});
+
+// Get all products
+router.get('/', async (req, res) => {
+    try {
+        console.log('GET /api/products - Request received');
+        console.log('MongoDB Connection State:', mongoose.connection.readyState);
+        
+        const products = await Product.find({}).lean();
+        console.log(`Found ${products.length} products`);
+        
+        if (!products || products.length === 0) {
+            console.log('No products found in database');
+            return res.status(404).json({ message: 'No products found' });
+        }
+        
+        res.json(products);
+    } catch (error) {
+        console.error('Error in GET /api/products:', error);
+        res.status(500).json({ 
+            message: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
+    }
+});
+
+// Get single product
 router.get('/:id', async (req, res) => {
     try {
         console.log(`GET /api/products/${req.params.id} - Fetching single product`);
@@ -63,4 +103,4 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-module.exports = router; 
+module.exports = router;
