@@ -104,6 +104,18 @@ app.use('/api/users', userRoutes);
 
 
 
+// Add logging to verify route registration
+
+console.log('Registered routes:', {
+
+    products: '/api/products',
+
+    users: '/api/users'
+
+});
+
+
+
 // Serve static files
 
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
@@ -254,7 +266,7 @@ app.get('/api/test', (req, res) => {
 
 
 
-// Error handling middleware
+// Move all error handlers and 404 handlers AFTER the routes
 
 app.use((err, req, res, next) => {
 
@@ -274,7 +286,7 @@ app.use((err, req, res, next) => {
 
 
 
-// Handle 404
+// Handle 404 - This should be the LAST middleware
 
 app.use((req, res) => {
 
