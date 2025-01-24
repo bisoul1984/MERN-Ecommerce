@@ -20,24 +20,6 @@ const app = express();
 
 
 
-// MongoDB connection events
-
-mongoose.connection.on('connected', () => {
-
-    console.log('MongoDB connected to:', mongoose.connection.host);
-
-});
-
-
-
-mongoose.connection.on('error', (err) => {
-
-    console.error('MongoDB connection error:', err);
-
-});
-
-
-
 // Basic error logging
 
 const logError = (err) => {
@@ -64,11 +46,7 @@ app.use(cors({
 
         'http://localhost:3000',
 
-        'https://mern-ecommerce-7nfx.vercel.app',
-
-        'https://mern-ecommerce-7nfx-cdq0uo3rs-bisrats-projects-b32b673c.vercel.app',
-
-        'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app'
+        'https://mern-ecommerce-7nfx-seven.vercel.app'
 
     ],
 
@@ -78,47 +56,15 @@ app.use(cors({
 
 }));
 
-
-
 app.use(express.json());
 
 
 
-// Request logging middleware
+// Add request logging
 
 app.use((req, res, next) => {
 
     console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-
-    next();
-
-});
-
-
-
-// Route debugging middleware
-
-app.use((req, res, next) => {
-
-    console.log('Route debugging:', {
-
-        path: req.path,
-
-        method: req.method,
-
-        registeredRoutes: app._router.stack
-
-            .filter(r => r.route)
-
-            .map(r => ({
-
-                path: r.route.path,
-
-                methods: Object.keys(r.route.methods)
-
-            }))
-
-    });
 
     next();
 
@@ -160,43 +106,13 @@ app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 
 
-// Root route
+// Root route for testing
 
 app.get('/', (req, res) => {
 
     res.json({
 
-        message: 'API is running',
-
-        routes: {
-
-            health: '/api/health',
-
-            products: '/api/products',
-
-            users: '/api/users',
-
-            debug: '/api/debug'
-
-        },
-
-        timestamp: new Date().toISOString()
-
-    });
-
-});
-
-
-
-// Direct test route
-
-app.get('/api/test-direct', (req, res) => {
-
-    res.json({
-
-        working: true,
-
-        mongoState: mongoose.connection.readyState,
+        message: 'Backend API is running',
 
         timestamp: new Date().toISOString()
 
@@ -216,95 +132,7 @@ app.get('/api/health', (req, res) => {
 
         timestamp: new Date().toISOString(),
 
-        env: process.env.NODE_ENV,
-
-        mongoStatus: mongoose.connection.readyState,
-
-        apis: {
-
-            products: '/api/products',
-
-            users: '/api/users'
-
-        },
-
-        cors: {
-
-            origins: [
-
-                'http://localhost:3000',
-
-                'https://mern-ecommerce-7nfx.vercel.app',
-
-                'https://mern-ecommerce-7nfx-cdq0uo3rs-bisrats-projects-b32b673c.vercel.app',
-
-                'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app'
-
-            ]
-
-        }
-
-    });
-
-});
-
-
-
-// Debug route
-
-app.get('/api/debug', (req, res) => {
-
-    res.json({
-
-        routes: {
-
-            products: app._router.stack.some(r => r.route && r.route.path === '/api/products'),
-
-            users: app._router.stack.some(r => r.route && r.route.path === '/api/users')
-
-        },
-
-        mongodb: {
-
-            state: mongoose.connection.readyState,
-
-            connected: mongoose.connection.readyState === 1,
-
-            database: mongoose.connection.name
-
-        },
-
-        environment: process.env.NODE_ENV,
-
-        timestamp: new Date().toISOString()
-
-    });
-
-});
-
-
-
-// Route test endpoint
-
-app.get('/api/route-test', (req, res) => {
-
-    res.json({
-
-        message: 'Route handler working',
-
-        registeredRoutes: app._router.stack
-
-            .filter(r => r.route)
-
-            .map(r => ({
-
-                path: r.route.path,
-
-                methods: Object.keys(r.route.methods)
-
-            })),
-
-        timestamp: new Date().toISOString()
+        env: process.env.NODE_ENV
 
     });
 
@@ -396,7 +224,7 @@ app.use((err, req, res, next) => {
 
 
 
-// 404 handler - Must be last
+// Handle 404
 
 app.use((req, res) => {
 
@@ -413,5 +241,23 @@ app.use((req, res) => {
     });
 
 });
+
+
+
+// Add this near the end of the file, before module.exports
+
+const PORT = process.env.PORT || 8081;
+
+
+
+app.listen(PORT, () => {
+
+    console.log(`Server is running on port ${PORT}`);
+
+    console.log('MongoDB Connection State:', mongoose.connection.readyState);
+
+});
+
+
 
 module.exports = app;
