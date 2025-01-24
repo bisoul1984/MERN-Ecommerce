@@ -96,7 +96,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 
-// API Routes
+// API Routes - IMPORTANT: Keep these before error handlers
 
 app.use('/api/products', productRoutes);
 
@@ -182,6 +182,60 @@ app.get('/api/health', (req, res) => {
 
 
 
+// Debug route
+
+app.get('/api/debug', (req, res) => {
+
+    res.json({
+
+        routes: {
+
+            products: app._router.stack.some(r => r.route && r.route.path === '/api/products'),
+
+            users: app._router.stack.some(r => r.route && r.route.path === '/api/users')
+
+        },
+
+        mongodb: {
+
+            state: mongoose.connection.readyState,
+
+            connected: mongoose.connection.readyState === 1,
+
+            database: mongoose.connection.name
+
+        },
+
+        environment: process.env.NODE_ENV,
+
+        timestamp: new Date().toISOString()
+
+    });
+
+});
+
+
+
+// Test route
+
+app.get('/api/test', (req, res) => {
+
+    res.json({
+
+        message: 'API is working',
+
+        env: process.env.NODE_ENV,
+
+        mongoStatus: mongoose.connection.readyState,
+
+        timestamp: new Date().toISOString()
+
+    });
+
+});
+
+
+
 // MongoDB connection test route
 
 app.get('/api/db-test', async (req, res) => {
@@ -246,27 +300,7 @@ app.get('/api/db-test', async (req, res) => {
 
 
 
-// Add this near your other routes
-
-app.get('/api/test', (req, res) => {
-
-    res.json({
-
-        message: 'API is working',
-
-        env: process.env.NODE_ENV,
-
-        mongoStatus: mongoose.connection.readyState,
-
-        timestamp: new Date().toISOString()
-
-    });
-
-});
-
-
-
-// Move all error handlers and 404 handlers AFTER the routes
+// Error handling middleware - IMPORTANT: Keep this after routes
 
 app.use((err, req, res, next) => {
 
@@ -286,7 +320,7 @@ app.use((err, req, res, next) => {
 
 
 
-// Handle 404 - This should be the LAST middleware
+// 404 handler - IMPORTANT: This must be the last middleware
 
 app.use((req, res) => {
 
