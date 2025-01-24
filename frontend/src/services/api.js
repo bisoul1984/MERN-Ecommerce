@@ -10,6 +10,8 @@ const api = axios.create({
 
     withCredentials: true,
 
+    timeout: 10000, // 10 second timeout
+
     headers: {
 
         'Content-Type': 'application/json'
@@ -88,19 +90,33 @@ api.interceptors.response.use(
 
     (error) => {
 
-        console.error('API Error:', {
+        if (error.code === 'ECONNABORTED') {
 
-            url: error.config?.url,
+            console.error('Request timeout:', error.config.url);
 
-            method: error.config?.method,
+        } else if (!error.response) {
 
-            status: error.response?.status,
+            console.error('Network error:', error.message);
 
-            data: error.response?.data,
+        } else {
 
-            message: error.message
+            console.error('API Error:', {
 
-        });
+                url: error.config?.url,
+
+                method: error.config?.method,
+
+                status: error.response?.status,
+
+                data: error.response?.data,
+
+                message: error.message,
+
+                baseURL: error.config?.baseURL
+
+            });
+
+        }
 
         return Promise.reject(error);
 
