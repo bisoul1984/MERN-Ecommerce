@@ -136,7 +136,33 @@ app.get('/api/health', (req, res) => {
 
         timestamp: new Date().toISOString(),
 
-        env: process.env.NODE_ENV
+        env: process.env.NODE_ENV,
+
+        mongoStatus: mongoose.connection.readyState,
+
+        apis: {
+
+            products: '/api/products',
+
+            users: '/api/users'
+
+        },
+
+        cors: {
+
+            origins: [
+
+                'http://localhost:3000',
+
+                'https://mern-ecommerce-7nfx.vercel.app',
+
+                'https://mern-ecommerce-7nfx-cdq0uo3rs-bisrats-projects-b32b673c.vercel.app',
+
+                'https://mern-ecommerce-mja8uz6tc-bisrats-projects-b32b673c.vercel.app'
+
+            ]
+
+        }
 
     });
 
@@ -203,6 +229,26 @@ app.get('/api/db-test', async (req, res) => {
         });
 
     }
+
+});
+
+
+
+// Add this near your other routes
+
+app.get('/api/test', (req, res) => {
+
+    res.json({
+
+        message: 'API is working',
+
+        env: process.env.NODE_ENV,
+
+        mongoStatus: mongoose.connection.readyState,
+
+        timestamp: new Date().toISOString()
+
+    });
 
 });
 
