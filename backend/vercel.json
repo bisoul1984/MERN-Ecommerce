@@ -20,7 +20,9 @@
 
       "src": "/api/(.*)",
 
-      "dest": "/server.js"
+      "dest": "server.js",
+
+      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
     },
 
@@ -28,7 +30,7 @@
 
       "src": "/(.*)",
 
-      "dest": "/server.js"
+      "dest": "server.js"
 
     }
 
