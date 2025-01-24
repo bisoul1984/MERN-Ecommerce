@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const User = require('../models/user');
+const User = require('../models/User');
 
-const Product = require('../models/product');
+const Product = require('../models/Product');
 
 const auth = require('../middleware/auth');
 
@@ -584,4 +584,4 @@ router.get('/test', (req, res) => {
 
 
 
-module.exports = router; 
+module.exports = router;
