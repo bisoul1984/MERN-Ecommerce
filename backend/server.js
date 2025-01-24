@@ -60,15 +60,47 @@ app.use(cors({
 
 }));
 
+
+
 app.use(express.json());
 
 
 
-// Add request logging
+// Request logging middleware
 
 app.use((req, res, next) => {
 
     console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+
+    next();
+
+});
+
+
+
+// Route debugging middleware
+
+app.use((req, res, next) => {
+
+    console.log('Route debugging:', {
+
+        path: req.path,
+
+        method: req.method,
+
+        registeredRoutes: app._router.stack
+
+            .filter(r => r.route)
+
+            .map(r => ({
+
+                path: r.route.path,
+
+                methods: Object.keys(r.route.methods)
+
+            }))
+
+    });
 
     next();
 
@@ -96,23 +128,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 
-// API Routes - IMPORTANT: Keep these before error handlers
+// API Routes
 
 app.use('/api/products', productRoutes);
 
 app.use('/api/users', userRoutes);
-
-
-
-// Add logging to verify route registration
-
-console.log('Registered routes:', {
-
-    products: '/api/products',
-
-    users: '/api/users'
-
-});
 
 
 
@@ -122,13 +142,25 @@ app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 
 
-// Root route for testing
+// Root route
 
 app.get('/', (req, res) => {
 
     res.json({
 
-        message: 'Backend API is running',
+        message: 'API is running',
+
+        routes: {
+
+            health: '/api/health',
+
+            products: '/api/products',
+
+            users: '/api/users',
+
+            debug: '/api/debug'
+
+        },
 
         timestamp: new Date().toISOString()
 
@@ -216,17 +248,25 @@ app.get('/api/debug', (req, res) => {
 
 
 
-// Test route
+// Route test endpoint
 
-app.get('/api/test', (req, res) => {
+app.get('/api/route-test', (req, res) => {
 
     res.json({
 
-        message: 'API is working',
+        message: 'Route handler working',
 
-        env: process.env.NODE_ENV,
+        registeredRoutes: app._router.stack
 
-        mongoStatus: mongoose.connection.readyState,
+            .filter(r => r.route)
+
+            .map(r => ({
+
+                path: r.route.path,
+
+                methods: Object.keys(r.route.methods)
+
+            })),
 
         timestamp: new Date().toISOString()
 
@@ -300,81 +340,7 @@ app.get('/api/db-test', async (req, res) => {
 
 
 
-// Add this right after your routes are registered
-
-app.use((req, res, next) => {
-
-    console.log('Route debugging:', {
-
-        path: req.path,
-
-        method: req.method,
-
-        registeredRoutes: app._router.stack
-
-            .filter(r => r.route)
-
-            .map(r => ({
-
-                path: r.route.path,
-
-                methods: Object.keys(r.route.methods)
-
-            }))
-
-    });
-
-    next();
-
-});
-
-
-
-// Move your API routes to the top, right after middleware
-
-app.use(express.json());
-
-app.use(cors({...}));
-
-
-
-// API Routes - Must be before error handlers
-
-app.use('/api/products', productRoutes);
-
-app.use('/api/users', userRoutes);
-
-
-
-// Test route to verify routing
-
-app.get('/api/route-test', (req, res) => {
-
-    res.json({
-
-        message: 'Route handler working',
-
-        registeredRoutes: app._router.stack
-
-            .filter(r => r.route)
-
-            .map(r => ({
-
-                path: r.route.path,
-
-                methods: Object.keys(r.route.methods)
-
-            })),
-
-        timestamp: new Date().toISOString()
-
-    });
-
-});
-
-
-
-// Error handling middleware - IMPORTANT: Keep this after routes
+// Error handling middleware
 
 app.use((err, req, res, next) => {
 
@@ -394,7 +360,7 @@ app.use((err, req, res, next) => {
 
 
 
-// 404 handler - IMPORTANT: This must be the last middleware
+// 404 handler - Must be last
 
 app.use((req, res) => {
 
@@ -411,7 +377,5 @@ app.use((req, res) => {
     });
 
 });
-
-
 
 module.exports = app;
