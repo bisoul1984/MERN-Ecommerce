@@ -2,15 +2,15 @@ import axios from 'axios';
 
 
 
-// Create axios instance with the correct base URL
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8081';
+
+
 
 const api = axios.create({
 
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8081',
+    baseURL: API_BASE_URL,
 
     withCredentials: true,
-
-    timeout: 10000, // 10 second timeout
 
     headers: {
 
@@ -28,21 +28,15 @@ api.interceptors.request.use(
 
     (config) => {
 
-        // Log the request details
-
         console.log('API Request:', {
 
             url: config.url,
 
             method: config.method,
 
-            baseURL: config.baseURL,
-
-            headers: config.headers
+            baseURL: config.baseURL
 
         });
-
-
 
         const token = localStorage.getItem('token');
 
@@ -58,8 +52,6 @@ api.interceptors.request.use(
 
     (error) => {
 
-        console.error('Request interceptor error:', error);
-
         return Promise.reject(error);
 
     }
@@ -68,62 +60,4 @@ api.interceptors.request.use(
 
 
 
-// Add response interceptor for debugging
-
-api.interceptors.response.use(
-
-    (response) => {
-
-        console.log('API Response:', {
-
-            url: response.config.url,
-
-            status: response.status,
-
-            data: response.data
-
-        });
-
-        return response;
-
-    },
-
-    (error) => {
-
-        if (error.code === 'ECONNABORTED') {
-
-            console.error('Request timeout:', error.config.url);
-
-        } else if (!error.response) {
-
-            console.error('Network error:', error.message);
-
-        } else {
-
-            console.error('API Error:', {
-
-                url: error.config?.url,
-
-                method: error.config?.method,
-
-                status: error.response?.status,
-
-                data: error.response?.data,
-
-                message: error.message,
-
-                baseURL: error.config?.baseURL
-
-            });
-
-        }
-
-        return Promise.reject(error);
-
-    }
-
-);
-
-
-
-export default api;
+export default api; 
