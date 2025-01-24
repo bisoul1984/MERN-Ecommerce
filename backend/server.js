@@ -46,7 +46,9 @@ app.use(cors({
 
         'http://localhost:3000',
 
-        'https://mern-ecommerce-7nfx-seven.vercel.app'
+        'https://mern-ecommerce-7nfx.vercel.app',
+
+        'https://mern-ecommerce-7nfx-cdq0uo3rs-bisrats-projects-b32b673c.vercel.app'
 
     ],
 
