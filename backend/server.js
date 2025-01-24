@@ -20,6 +20,24 @@ const app = express();
 
 
 
+// MongoDB connection events
+
+mongoose.connection.on('connected', () => {
+
+    console.log('MongoDB connected to:', mongoose.connection.host);
+
+});
+
+
+
+mongoose.connection.on('error', (err) => {
+
+    console.error('MongoDB connection error:', err);
+
+});
+
+
+
 // Basic error logging
 
 const logError = (err) => {
@@ -161,6 +179,24 @@ app.get('/', (req, res) => {
             debug: '/api/debug'
 
         },
+
+        timestamp: new Date().toISOString()
+
+    });
+
+});
+
+
+
+// Direct test route
+
+app.get('/api/test-direct', (req, res) => {
+
+    res.json({
+
+        working: true,
+
+        mongoState: mongoose.connection.readyState,
 
         timestamp: new Date().toISOString()
 
