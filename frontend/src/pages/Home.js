@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchProducts } from '../features/productSlice';
@@ -7,7 +8,6 @@ import ProductPreview from '../components/ProductPreview';
 import './Home.css';
 // Import icons
 import CategoryIcon from '@mui/icons-material/Category';
-import LaptopIcon from '@mui/icons-material/Laptop';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import TabletIcon from '@mui/icons-material/Tablet';
 import SortIcon from '@mui/icons-material/Sort';
@@ -16,6 +16,8 @@ import StarIcon from '@mui/icons-material/Star';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { FaFire, FaArrowRight, FaStar } from 'react-icons/fa';
+import { Button } from 'react-bootstrap';
+import LaptopIcon from '@mui/icons-material/Laptop';
 
 function Home() {
     const dispatch = useDispatch();

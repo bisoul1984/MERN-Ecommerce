@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
-const Product = require('../models/product');
+const User = require('../models/User');
+const Product = require('../models/Product');
 const auth = require('../middleware/auth');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -223,54 +223,63 @@ router.post('/add-to-cart', auth, async (req, res) => {
 });
 
 // Remove from cart
-router.delete('/remove-from-cart', auth, async (req, res) => {
+router.post('/remove-from-cart', async (req, res) => {
     try {
         const { userId, productId } = req.body;
-        console.log('Remove from cart request:', { userId, productId });
-
-        // Verify user authorization
-        if (userId !== req.user._id.toString()) {
-            return res.status(403).json({ message: "Not authorized to modify this cart" });
-        }
-
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        // Initialize cart if needed
-        if (!user.cart || !user.cart.items) {
-            user.cart = { items: {}, total: 0, count: 0 };
-        }
-
-        console.log('Current cart:', {
-            items: Object.keys(user.cart.items),
-            productToRemove: productId
+        console.log('Remove from cart request received:', {
+            userId,
+            productId,
+            path: req.path,
+            baseUrl: req.baseUrl,
+            fullPath: `${req.baseUrl}${req.path}`
         });
 
-        // Check if item exists
-        if (!user.cart.items[productId]) {
-            return res.status(404).json({ message: "Item not found in cart" });
+        // Validate inputs
+        if (!userId || !productId) {
+            console.log('Missing required fields:', { userId, productId });
+            return res.status(400).json({
+                message: 'User ID and Product ID are required',
+                received: { userId, productId }
+            });
         }
 
-        // Remove item and update cart
-        delete user.cart.items[productId];
+        // Find user
+        const user = await User.findById(userId);
+        if (!user) {
+            console.log('User not found:', userId);
+            return res.status(404).json({ 
+                message: 'User not found',
+                userId 
+            });
+        }
 
-        // Recalculate totals
-        const items = Object.values(user.cart.items);
-        user.cart.count = items.reduce((sum, item) => sum + item.quantity, 0);
-        user.cart.total = items.reduce((sum, item) => sum + (item.quantity * item.product.price), 0);
+        console.log('Current user cart:', user.cart);
 
-        // Mark as modified and save
-        user.markModified('cart');
-        await user.save();
+        // Check if item exists in cart
+        if (!user.cart?.items?.[productId]) {
+            console.log('Product not found in cart:', productId);
+            return res.status(404).json({
+                message: 'Product not found in cart',
+                productId
+            });
+        }
 
-        console.log('Updated cart:', user.cart);
-        res.json(user.cart);
+        // Remove item
+        try {
+            const updatedUser = await user.removeFromCart(productId);
+            console.log('Cart updated successfully:', updatedUser.cart);
+            return res.json(updatedUser.cart);
+        } catch (removeError) {
+            console.error('Error in removeFromCart:', removeError);
+            throw removeError;
+        }
 
     } catch (error) {
         console.error('Remove from cart error:', error);
-        res.status(500).json({ message: "Error removing item from cart" });
+        res.status(500).json({ 
+            message: 'Failed to remove item from cart',
+            error: error.message 
+        });
     }
 });
 

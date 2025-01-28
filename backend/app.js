@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const userRoutes = require('./routes/userRoutes');
-const productRoutes = require('./routes/productRoutes');
+const path = require('path');
+const userRoutes = require(path.join(__dirname, 'routes', 'userRoutes'));
+const productRoutes = require(path.join(__dirname, 'routes', 'productRoutes'));
 require('dotenv').config();
 
 const app = express();
@@ -28,36 +29,27 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 
-// MongoDB connection with retry logic
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 5000,
-            retryWrites: true,
-            w: 'majority'
-        });
-        console.log('Connected to MongoDB');
-    } catch (err) {
-        console.error('MongoDB connection error:', err);
-        // Retry connection after 5 seconds
-        setTimeout(connectDB, 5000);
-    }
-};
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    retryWrites: true,
+    w: 'majority',
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);  // Exit if cannot connect to database
+});
 
-connectDB();
-
-// Error handling middleware
+// Error handling
 app.use((err, req, res, next) => {
-    console.error('Error:', err);
-    const errorMessage = process.env.NODE_ENV === 'production' 
-        ? 'Internal Server Error' 
-        : err.message;
-    
-    res.status(500).json({ 
-        status: 'error',
-        message: errorMessage
+    console.error(err.stack);
+    res.status(500).json({
+        error: 'Internal Server Error',
+        message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
     });
 });
 

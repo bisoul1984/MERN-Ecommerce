@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Name is required']
@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next();
     
     try {
@@ -49,7 +49,7 @@ userSchema.pre('save', async function(next) {
 });
 
 // Add to cart method
-userSchema.methods.addToCart = async function(productId, product) {
+UserSchema.methods.addToCart = async function(productId, product) {
     console.log('=== Adding to Cart ===');
     console.log('Current cart:', this.cart);
     console.log('Product to add:', { productId, product });
@@ -101,33 +101,62 @@ userSchema.methods.addToCart = async function(productId, product) {
 };
 
 // Add removeFromCart method
-userSchema.methods.removeFromCart = async function(productId) {
+UserSchema.methods.removeFromCart = async function(productId) {
     try {
+        console.log('Starting removeFromCart:', {
+            productId,
+            cartExists: !!this.cart,
+            itemsExist: !!this.cart?.items,
+            currentCart: this.cart
+        });
+        
         // Initialize cart if needed
         if (!this.cart || !this.cart.items) {
+            console.log('Initializing empty cart');
             this.cart = { items: {}, total: 0, count: 0 };
+            return this;
         }
 
         // Check if item exists in cart
-        if (this.cart.items[productId]) {
-            // Remove the item
-            delete this.cart.items[productId];
-
-            // Recalculate totals
-            const items = Object.values(this.cart.items);
-            this.cart.count = items.reduce((sum, item) => sum + item.quantity, 0);
-            this.cart.total = items.reduce((sum, item) => sum + (item.quantity * item.product.price), 0);
-
-            // Mark as modified and save
-            this.markModified('cart');
-            return await this.save();
+        if (!this.cart.items[productId]) {
+            console.log('Product not found in cart:', productId);
+            return this;
         }
-        return this;
+
+        // Store item details before removal
+        const itemToRemove = this.cart.items[productId];
+        console.log('Removing item:', itemToRemove);
+
+        // Remove the item
+        delete this.cart.items[productId];
+
+        // Recalculate totals
+        const items = Object.values(this.cart.items);
+        this.cart.count = items.reduce((sum, item) => sum + item.quantity, 0);
+        this.cart.total = items.reduce((sum, item) => 
+            sum + (item.quantity * item.product.price), 0);
+
+        console.log('Updated cart:', {
+            itemCount: this.cart.count,
+            total: this.cart.total,
+            remainingItems: Object.keys(this.cart.items)
+        });
+
+        // Mark cart as modified and save
+        this.markModified('cart');
+        const savedUser = await this.save();
+        console.log('Cart saved successfully');
+        
+        return savedUser;
     } catch (error) {
-        console.error('Error removing from cart:', error);
+        console.error('Error in removeFromCart:', {
+            error,
+            productId,
+            cartState: this.cart
+        });
         throw error;
     }
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
 module.exports = User; 

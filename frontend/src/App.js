@@ -15,6 +15,7 @@ import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Checkout from './pages/Checkout';
 import Error from './components/Error';
+import ProductList from './components/Products/ProductList';
 
 const router = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Layout><Profile /></Layout>,
+    },
+    {
+        path: "/product-list",
+        element: <Layout><ProductList /></Layout>,
     },
     {
         path: "*",

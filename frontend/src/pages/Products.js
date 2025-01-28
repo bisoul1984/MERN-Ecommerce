@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { fetchProducts } from '../features/productSlice';
 import ProductPreview from '../components/ProductPreview';
 import './Products.css';
-import axios from 'axios';
+import api from '../services/api';
 
 function Products() {
     const dispatch = useDispatch();
@@ -14,9 +14,17 @@ function Products() {
     const category = searchParams.get('category');
 
     useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchProducts());
-        }
+        const fetchData = async () => {
+            if (status === 'idle') {
+                try {
+                    const result = await dispatch(fetchProducts()).unwrap();
+                    console.log('Products fetched successfully:', result);
+                } catch (error) {
+                    console.error('Error fetching products:', error);
+                }
+            }
+        };
+        fetchData();
     }, [status, dispatch]);
 
     const handleAddToCart = async (productId) => {
@@ -29,19 +37,10 @@ function Products() {
                 return;
             }
 
-            const response = await axios.post(
-                'http://localhost:8080/api/users/add-to-cart',
-                {
-                    userId: storedUser._id,
-                    productId: productId
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                }
-            );
+            const response = await api.post('/api/users/add-to-cart', {
+                userId: storedUser._id,
+                productId: productId
+            });
 
             if (response.data) {
                 // Update both user and cart in Redux
@@ -50,6 +49,7 @@ function Products() {
                 dispatch({ type: 'USER_LOGIN', payload: updatedUser });
                 // Optionally dispatch a separate cart update
                 dispatch({ type: 'UPDATE_CART', payload: response.data });
+                alert('Product added to cart successfully!');
             }
         } catch (error) {
             console.error('Add to cart error:', error);
@@ -97,7 +97,10 @@ function Products() {
                 <Row>
                     {filteredProducts.map(product => (
                         <Col key={product._id} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                            <ProductPreview {...product} />
+                            <ProductPreview 
+                                {...product} 
+                                onAddToCart={() => handleAddToCart(product._id)}
+                            />
                         </Col>
                     ))}
                 </Row>

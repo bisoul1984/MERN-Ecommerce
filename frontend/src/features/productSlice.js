@@ -1,21 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { API_BASE_URL } from '../config/api';
+import api from '../services/api';  // Use api service instead of axios
 
 // Create async thunk for fetching products
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/products`);
+            console.log('Fetching products from:', process.env.REACT_APP_API_URL);
+            const response = await api.get('/api/products');  // Use api service
+            console.log('Products response:', response.data);
             return response.data;
         } catch (error) {
-            console.error('Error fetching products:', {
+            console.error('Fetch products error:', {
                 message: error.message,
                 response: error.response?.data,
-                status: error.response?.status
+                status: error.response?.status,
+                url: error.config?.url
             });
-            return rejectWithValue(error.response?.data || 'Failed to fetch products');
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch products');
         }
     }
 );

@@ -2,21 +2,35 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server.js"
+      "dest": "index.js",
+      "headers": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "https://mern-ecommerce-7nfx-seven.vercel.app",
+        "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
+      }
     },
     {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "index.js"
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "MONGODB_URI": "mongodb+srv://ecomern_admin:ecomern123secure@cluster0.v1knf.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0",
+    "JWT_SECRET": "somesecretkey123",
+    "CORS_ORIGIN": "https://mern-ecommerce-7nfx-seven.vercel.app"
+  },
+  "functions": {
+    "server.js": {
+      "includeFiles": "models/**"
+    }
   }
 } 

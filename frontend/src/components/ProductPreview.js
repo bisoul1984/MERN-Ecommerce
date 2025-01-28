@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./ProductPreview.css";
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import { getFallbackImage } from '../utils/imageUtils';
+import api from '../services/api';
 
 function ProductPreview({ _id, name, price, image, category }) {
     const dispatch = useDispatch();
@@ -30,19 +30,10 @@ function ProductPreview({ _id, name, price, image, category }) {
                 return;
             }
 
-            const response = await axios.post(
-                'http://localhost:8081/api/users/add-to-cart',
-                {
-                    userId: storedUser._id,
-                    productId: _id
-                },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
+            const response = await api.post('/api/users/add-to-cart', {
+                userId: storedUser._id,
+                productId: _id
+            });
 
             if (response.data) {
                 const updatedUser = { ...storedUser, cart: response.data };

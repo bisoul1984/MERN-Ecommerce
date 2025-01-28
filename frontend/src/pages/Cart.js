@@ -1,10 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import './Cart.css';
-import axios from 'axios';
-import { API_BASE_URL } from '../config/api';
+import api from '../services/api';  // Replace axios with api service
 
 function Cart() {
     const user = useSelector(state => state.user);
@@ -28,19 +28,15 @@ function Cart() {
                 return;
             }
 
-            const response = await axios.delete(
-                'http://localhost:8081/api/users/remove-from-cart',
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        userId: storedUser._id,
-                        productId
-                    }
+            const response = await api.post('/api/users/remove-from-cart', {
+                userId: storedUser._id,
+                productId
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
-            );
+            });
 
             console.log('Remove from cart response:', response.data);
 
@@ -49,6 +45,9 @@ function Cart() {
                 const updatedUser = { ...storedUser, cart: response.data };
                 localStorage.setItem('user', JSON.stringify(updatedUser));
                 dispatch({ type: 'USER_LOGIN', payload: updatedUser });
+                
+                // Log success
+                console.log('Cart updated successfully:', response.data);
             } else {
                 throw new Error('Invalid response from server');
             }
@@ -58,7 +57,9 @@ function Cart() {
                 message: error.message,
                 response: error.response?.data,
                 status: error.response?.status,
-                cartItems: storedUser?.cart?.items
+                cartItems: storedUser?.cart?.items,
+                url: error.config?.url,
+                method: error.config?.method
             });
             
             if (error.response?.status === 401) {
