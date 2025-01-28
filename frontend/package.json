@@ -1,8 +1,13 @@
 {
+
   "name": "ecomern-yt-frontend",
+
   "version": "0.1.0",
+
   "private": true,
+
   "dependencies": {
+<<<<<<< HEAD
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
@@ -29,37 +34,142 @@
     "redux-persist": "^6.0.0",
     "socket.io-client": "^4.6.2",
     "web-vitals": "^2.1.4"
+=======
+
+    "@emotion/react": "^11.11.0",
+
+    "@emotion/styled": "^11.11.0",
+
+    "@mui/icons-material": "^5.11.16",
+
+    "@mui/material": "^5.13.0",
+
+    "@reduxjs/toolkit": "^1.9.5",
+
+    "@tanstack/react-query": "^4.29.12",
+
+    "aos": "^2.3.4",
+
+    "axios": "^1.4.0",
+
+    "bootstrap": "^5.3.0",
+
+    "cra-template": "1.2.0",
+
+    "framer-motion": "^10.12.16",
+
+    "react": "^18.2.0",
+
+    "react-alice-carousel": "^2.7.1",
+
+    "react-bootstrap": "^2.8.0",
+
+    "react-dom": "^18.2.0",
+
+    "react-icons": "^4.9.0",
+
+    "react-intersection-observer": "^9.4.3",
+
+    "react-redux": "^8.1.1",
+
+    "react-router": "^6.11.2",
+
+    "react-router-bootstrap": "^0.26.2",
+
+    "react-router-dom": "^6.14.1",
+
+    "react-scripts": "5.0.1",
+
+    "redux": "^4.2.1",
+
+    "redux-persist": "^6.0.0",
+
+    "socket.io-client": "^4.6.2",
+
+    "web-vitals": "^2.1.4"
+
+>>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
   },
+
   "devDependencies": {
+
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+<<<<<<< HEAD
     "react-refresh": "^0.14.0"
+=======
+
+    "react-refresh": "^0.14.0"
+
+>>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
   },
+
   "scripts": {
+
     "start": "react-scripts start",
+<<<<<<< HEAD
     "build": "DISABLE_ESLINT_PLUGIN=true CI=false GENERATE_SOURCEMAP=false react-scripts build",
+=======
+
+    "build": "DISABLE_ESLINT_PLUGIN=true CI=false GENERATE_SOURCEMAP=false react-scripts build",
+
+>>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
     "test": "react-scripts test",
+
     "eject": "react-scripts eject"
+
   },
+
   "eslintConfig": {
+
     "extends": [
+
       "react-app",
+
       "react-app/jest"
+
     ]
+
   },
+
   "browserslist": {
+
     "production": [
+
       ">0.2%",
+
       "not dead",
+
       "not op_mini all"
+
     ],
+
     "development": [
+
       "last 1 chrome version",
+
       "last 1 firefox version",
+
       "last 1 safari version"
+
     ]
+<<<<<<< HEAD
   },
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.0.0"
+=======
+
+  },
+
+  "engines": {
+
+    "node": ">=14.0.0",
+
+    "npm": ">=6.0.0"
+
+>>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
   }
+
 }
+
+
