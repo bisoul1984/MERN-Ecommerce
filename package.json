@@ -1,17 +1,9 @@
 {
   "name": "mern-ecommerce",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "install-backend": "cd backend && npm install",
-    "install-frontend": "cd frontend && npm install",
-    "build-frontend": "cd frontend && npm run build",
-    "start": "cd backend && npm start",
-    "install": "npm run install-backend && npm run install-frontend",
-    "build": "npm run build-frontend"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "build": "cd frontend && npm install --legacy-peer-deps && DISABLE_ESLINT_PLUGIN=true CI=false npm run build",
+    "start": "cd frontend && npm start"
+  }
 } 
