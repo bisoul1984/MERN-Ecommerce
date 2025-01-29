@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8081';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://mern-ecommerce-gilt-delta.vercel.app';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -10,10 +10,10 @@ const api = axios.create({
     }
 });
 
-// Add request interceptor for debugging
+// Enhanced request interceptor
 api.interceptors.request.use(
     (config) => {
-        console.log('API Request:', {
+        console.log('%c API Request:', 'color: blue; font-weight: bold', {
             url: config.url,
             method: config.method,
             baseURL: config.baseURL,
@@ -23,26 +23,27 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
-        console.error('API Request Error:', error);
+        console.error('%c API Request Error:', 'color: red; font-weight: bold', error);
         return Promise.reject(error);
     }
 );
 
-// Add response interceptor for debugging
+// Enhanced response interceptor
 api.interceptors.response.use(
     (response) => {
-        console.log('API Response:', {
+        console.log('%c API Response:', 'color: green; font-weight: bold', {
             status: response.status,
-            data: response.data
+            data: response.data,
+            url: response.config.url
         });
         return response;
     },
     (error) => {
-        console.error('API Error:', {
+        console.error('%c API Error:', 'color: red; font-weight: bold', {
             message: error.message,
             response: error.response?.data,
             status: error.response?.status,
-            config: error.config
+            url: error.config?.url
         });
         return Promise.reject(error);
     }

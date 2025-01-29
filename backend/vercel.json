@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "index.js",
+      "src": "server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "index.js",
+      "dest": "server.js",
       "headers": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "https://mern-ecommerce-7nfx-seven.vercel.app",
@@ -19,7 +19,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "index.js"
+      "dest": "server.js"
     }
   ],
   "env": {
