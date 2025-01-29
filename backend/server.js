@@ -22,9 +22,8 @@ const logError = (err) => {
 app.use(cors({
     origin: [
         'http://localhost:3000',
-        'https://mern-ecommerce-7nfx-seven.vercel.app',
-        'https://mern-ecommerce-frontend-seven.vercel.app',
-        process.env.CORS_ORIGIN
+        'http://172.31.218.55:3000',
+        'https://mern-ecommerce-7nfx-seven.vercel.app'
     ].filter(Boolean),
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],

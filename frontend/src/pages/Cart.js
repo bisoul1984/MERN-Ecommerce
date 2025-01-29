@@ -8,14 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import './Cart.css';
-<<<<<<< HEAD
 import api from '../services/api';  // Replace axios with api service
-=======
-
-import api from '../services/api';  // Replace axios with api service
-
-
->>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
 
 function Cart() {
 
@@ -59,45 +52,25 @@ function Cart() {
 
             }
 
-<<<<<<< HEAD
+
+
             const response = await api.post('/api/users/remove-from-cart', {
+
                 userId: storedUser._id,
+
                 productId
+
             }, {
+
                 headers: {
+
                     'Authorization': `Bearer ${token}`,
+
                     'Content-Type': 'application/json'
+
                 }
+
             });
-=======
-
-
-            const response = await api.delete(
-
-                '/users/remove-from-cart',
-
-                {
-
-                    headers: {
-
-                        'Authorization': `Bearer ${token}`,
-
-                        'Content-Type': 'application/json'
-
-                    },
-
-                    data: {
-
-                        userId: storedUser._id,
-
-                        productId
-
-                    }
-
-                }
-
-            );
->>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
 
 
 
@@ -114,13 +87,10 @@ function Cart() {
                 localStorage.setItem('user', JSON.stringify(updatedUser));
 
                 dispatch({ type: 'USER_LOGIN', payload: updatedUser });
-<<<<<<< HEAD
                 
                 // Log success
                 console.log('Cart updated successfully:', response.data);
-=======
 
->>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
             } else {
 
                 throw new Error('Invalid response from server');
@@ -138,15 +108,13 @@ function Cart() {
                 response: error.response?.data,
 
                 status: error.response?.status,
-<<<<<<< HEAD
+
                 cartItems: storedUser?.cart?.items,
+
                 url: error.config?.url,
+
                 method: error.config?.method
-=======
 
-                cartItems: storedUser?.cart?.items
-
->>>>>>> 30fdc920c19ed9ed3592dc8c7afa42594bbe4422
             });
 
             
